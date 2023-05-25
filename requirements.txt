@@ -2,3 +2,6 @@ aiogram
 asyncio
 vk-captchasolver
 peewee
+requests
+celery
+urllib
