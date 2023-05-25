@@ -1,0 +1,4 @@
+aiogram
+asyncio
+vk-captchasolver
+peewee
