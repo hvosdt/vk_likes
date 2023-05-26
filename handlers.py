@@ -123,11 +123,10 @@ class FormAuth(StatesGroup):
     app_id = State()
     app_secret = State()
     
-@dp.message_handler(commands=['target'])
-async def target(message: types.Message):
-
-    await Form.target.set()
-    await message.reply("Привет! Укажи цель.")
+class FormTarget(StatesGroup):
+    target = State()
+    target_sex = State()
+    
 
 # Добавляем возможность отмены, если пользователь передумал заполнять
 @dp.message_handler(state='*', commands='cancel')
@@ -173,27 +172,6 @@ def find_target(url, token):
     return result
     
     return vk_target
-# Сюда приходит ответ с target
-@dp.message_handler(state=Form.target)
-async def process_target(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        token = get_VK_token(message.from_user.id)
-        #target = find_target(message.text, token)['response']['items'][0]['id']
-        url = urlparse(message.text).path[1:]
-        target = find_target(url, token)
-        
-        print(target)
-        data = {'target': target}
-        entry, is_new = User.get_or_create(
-                user_id = message.from_user.id
-            )
-        if not is_new:
-            query = User.update(data).where(User.user_id==message.from_user.id)
-            query.execute()
-    entry = User.get(user_id = message.from_user.id)
-    await message.answer('Цель принята!')
-
-    await state.finish()
     
 # Начинаем наш диалог
 @dp.message_handler(commands=['token'])
@@ -215,6 +193,48 @@ async def process_token(message: types.Message, state: FSMContext):
     await message.answer('Токен принят!')
 
     await state.finish()
+
+#Принимаем таргет и пол
+@dp.message_handler(commands=['target'])
+async def target(message: types.Message):
+    await FormTarget.target.set()
+    await message.reply('Отправь ссылку на пользователя или сообщество ВК')
+    
+# Сюда приходит ответ с target
+@dp.message_handler(state=FormTarget.target)
+async def process_target(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        token = get_VK_token(message.from_user.id)
+        #target = find_target(message.text, token)['response']['items'][0]['id']
+        url = urlparse(message.text).path[1:]
+        target = find_target(url, token)
+        
+        print(target)
+        data = {'target': target}
+        entry, is_new = User.get_or_create(
+                user_id = message.from_user.id
+            )
+        if not is_new:
+            query = User.update(data).where(User.user_id==message.from_user.id)
+            query.execute()
+    entry = User.get(user_id = message.from_user.id)
+    await message.answer('Цель принята! Какого пола будем добавлять друзей?\nОтправь в ответ цифру:\n1 - женксий, 2 - мужской, 3 - всех')
+
+    await FormTarget.next()
+
+@dp.message_handler(state=FormTarget.target_sex)
+async def process_target_sex(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        token = get_VK_token(message.from_user.id)
+        
+        data = {'target_sex': int(message.text)}
+        query = User.update(data).where(User.user_id==message.from_user.id)
+        query.execute()
+    await message.answer('Цель принята. Сейчас пойду искать друзей.')
+    await message.answer('Также я буду ежеднено искать друзей в целевой группе и ставить лайки всем, кому отправил заявки в друзья.') 
+
+    await state.finish()
+
     
 # Начинаем наш диалог authorize
 @dp.message_handler(commands=['authorize'])
@@ -226,16 +246,6 @@ async def authorize(message: types.Message):
 @dp.message_handler(state=FormAuth.app_id)
 async def process_app_id(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        '''
-        data = {'app_id': message.text}
-        entry, is_new = User.get_or_create(
-                user_id = message.from_user.id,
-                app_id = message.text
-            )
-        if not is_new:
-            query = User.update(data).where(User.user_id==message.from_user.id)
-            query.execute()
-        '''
         data = {'app_id': message.text}
         query = User.update(data).where(User.user_id==message.from_user.id)
         query.execute()
@@ -243,31 +253,20 @@ async def process_app_id(message: types.Message, state: FSMContext):
         app_id = message.text,
         redirect_url = config.REDIRECT_URL
     )
-    #entry = User.get(user_id = message.from_user.id)
     await FormAuth.next()
+    await message.answer('ID принят! Теперь перейди по ссылке: ')
     await message.answer(url)
-    await message.answer('ID принят! Теперь укажи секретный ключ')
     
 @dp.message_handler(state=FormAuth.app_secret)
 async def process_app_secret(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        '''
-        data = {'app_secret': message.text}
-        entry, is_new = User.get_or_create(
-                user_id = message.from_user.id,
-                app_secret = message.text
-            )
-        if not is_new:
-            query = User.update(data).where(User.user_id==message.from_user.id)
-            query.execute()
-        '''
         pq = parse_qs(urlparse(message.text).fragment)
         data = {'token': pq["access_token"][0]}
         query = User.update(data).where(User.user_id==message.from_user.id)
         query.execute()
     entry = User.get(user_id = message.from_user.id)
     
-    await message.answer('Секретный ключ принят! Token: ' + entry.token)
+    await message.answer('Секретный ключ принят! Теперь нужно добавить ссылку на цель в ВК с помощью команды \n/target')
     await state.finish()
     
 
@@ -409,6 +408,7 @@ def process_friends(data):
     target, vk_token, from_user_id, chat_id = data['target'], data['vk_token'], data['from_user_id'], data['chat_id']
     #Получаем стену пользователя
     wall = get_wall(target, vk_token)
+    #print(wall)
     time.sleep(0.2)
     try:
         if 'response' in wall.keys():
@@ -419,11 +419,13 @@ def process_friends(data):
             
                 #Получаем пользователей, поставивших лайки к посту
                 likes = get_likes(type, target, id, vk_token)
+                print(likes)
                 time.sleep(0.2)
                 if 'response' in likes.keys():
                     for liker_id in likes['response']['items']:
                         #Получаем данные пользователя, лайкнувшего пост
                         liker = get_users(liker_id, vk_token)
+                        print(liker)
                         time.sleep(0.2)
                         if 'response' in liker.keys():
                             try:
@@ -447,11 +449,20 @@ def process_friends(data):
                                 pass
                             #Проверяем друзья ли мы
                             friend_status = are_we_friends(liker_id, vk_token)
+                            
+                            liker_sex = int(liker['response'][0]['sex'])
+                            target_sex = User.get(user_id = from_user_id).target_sex
+                            if target_sex == 3:
+                                list_sex = [0, 1, 2]
+                            else:
+                                list_sex = [0, int(target_sex)]
+                                
+                            print('Sex of target: ' + target_sex)
                             print('Status: ' + str(friend_status['response'][0]['friend_status']))
                             time.sleep(0.2)
                             if 'response' in friend_status:
                                 #Если нет, то отправляем заявку в друзья
-                                if int(friend_status['response'][0]['friend_status']) == 0 and int(liker['response'][0]['sex']) == 1:                                
+                                if int(friend_status['response'][0]['friend_status']) == 0 and liker_sex in list_sex:
                                     add = add_friend(liker_id, vk_token)
                                     print('Add friend: ' + liker['response'][0]['first_name'] + ' ' + str(add))
                                     time.sleep(0.2)
@@ -493,7 +504,7 @@ def process_likes(data):
     
     count = 0
     total_likes = 0
-    user = User.get(user_id = from_user_id)
+    #user = User.get(user_id = from_user_id)
     for user in Friend.select().join(User).where(User.user_id == from_user_id):
         print('Use: ' + user.first_name)
         count += 1
@@ -503,7 +514,7 @@ def process_likes(data):
         wall = get_wall(owner_id, vk_token)
         if wall == 5:
             #Ошибка токена
-            msg = 'Ошибка токена. Отправлено заявок в друзья: {total_likes}.'.format(
+            msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
                         total_likes = total_likes
                     )
             send_msg(chat_id, msg)
