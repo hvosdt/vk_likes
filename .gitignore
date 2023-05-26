@@ -3,3 +3,5 @@
 /helpers
 config.py
 vk.db
+/__pycache__
+celerybeat-schedule.db
