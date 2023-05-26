@@ -36,11 +36,11 @@ client.conf.timezone = 'Europe/Moscow'
 client.conf.beat_schedule = {
     'cron_friends': {
         'task': 'handlers.cron_friends',
-        'schedule': crontab(hour=10, minute=00)
+        'schedule': crontab(hour=14, minute=17)
     },
     'cron_likes': {
         'task': 'handlers.cron_likes',
-        'schedule': crontab(hour=10, minute=57)
+        'schedule': crontab(hour=14, minute=20)
     }
 }
 
