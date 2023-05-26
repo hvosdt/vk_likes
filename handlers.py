@@ -5,9 +5,11 @@ import datetime
 from models import User, Friend
 from urllib.parse import urlparse, urlsplit
 
+
 from urllib.parse import urlparse, urldefrag, parse_qs
 #from handlers import *
 from celery import Celery
+from celery.schedules import crontab
 #from api_operator import client
 
 
@@ -28,7 +30,50 @@ dp = Dispatcher(bot, storage=storage)
 
 client = Celery('vk_like', broker=config.CELERY_BROKER_URL)
 client.conf.result_backend = config.CELERY_RESULT_BACKEND
+client.conf.timezone = 'Europe/Moscow'
 
+
+client.conf.beat_schedule = {
+    'cron_friends': {
+        'task': 'handlers.cron_friends',
+        'schedule': crontab(hour=10, minute=00)
+    },
+    'cron_likes': {
+        'task': 'handlers.cron_likes',
+        'schedule': crontab(hour=10, minute=57)
+    }
+}
+
+@client.task
+def cron_friends():
+    users = User.select()
+    for user in users:
+        vk_token = get_VK_token(user.user_id)
+        target = get_target(user.user_id)
+        print(vk_token)
+        
+        data = {}
+        data['target'] = target
+        data['vk_token'] = vk_token
+        data['from_user_id'] = user.user_id
+        data['chat_id'] = user.user_id
+        send_msg(user.user_id, 'Пощел искать друзей!')
+        process_friends.apply_async(args=[data])
+
+@client.task
+def cron_likes():
+    users = User.select()
+    for user in users:
+        vk_token = get_VK_token(user.user_id)
+        print(vk_token)
+        
+        data = {}
+        
+        data['vk_token'] = vk_token
+        data['from_user_id'] = user.user_id
+        data['chat_id'] = user.user_id
+        send_msg(user.user_id, 'Пошел ставить лайки!')
+        process_likes.apply_async(args=[data])
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.message):
@@ -444,7 +489,7 @@ def send_msg(chat_id, text):
     
 @client.task
 def process_likes(data):
-    target, vk_token, from_user_id, chat_id = data['target'], data['vk_token'], data['from_user_id'], data['chat_id']
+    vk_token, from_user_id, chat_id = data['vk_token'], data['from_user_id'], data['chat_id']
     
     count = 0
     total_likes = 0
@@ -482,14 +527,14 @@ def process_likes(data):
                                 print('Result of add like: ' + result)
                                 if result == 5:
                                     #Ошибка токена
-                                    msg = 'Ошибка токена. Отправлено заявок в друзья: {total_likes}.'.format(
+                                    msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
                                                 total_likes = total_likes
                                             )
                                     send_msg(chat_id, msg)
                                     return 15 
                                 if result == 9:
                                     #Ошибка токена
-                                    msg = 'На сегодня все. Отправлено заявок в друзья: {total_likes}.'.format(
+                                    msg = 'На сегодня все. Поставлено лайков: {total_likes}.'.format(
                                                 total_likes = total_likes
                                             )
                                     send_msg(chat_id, msg)
@@ -503,7 +548,7 @@ def process_likes(data):
                         pass 
         except:
             pass
-    msg = 'На сегодня все. Отправлено заявок в друзья: {total_likes}.'.format(
+    msg = 'На сегодня все. Поставлено лайков: {total_likes}.'.format(
                                                 total_likes = total_likes
                                             )
     send_msg(chat_id, msg)
