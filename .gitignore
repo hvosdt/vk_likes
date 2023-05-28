@@ -1,7 +1,7 @@
 /venv
 /backup
 /helpers
+/__pycache__
 config.py
 vk.db
-/__pycache__
 celerybeat-schedule.db
