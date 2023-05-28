@@ -450,19 +450,11 @@ def process_friends(data):
                             #Проверяем друзья ли мы
                             friend_status = are_we_friends(liker_id, vk_token)
                             
-                            liker_sex = int(liker['response'][0]['sex'])
-                            target_sex = User.get(user_id = from_user_id).target_sex
-                            if target_sex == 3:
-                                list_sex = [0, 1, 2]
-                            else:
-                                list_sex = [0, int(target_sex)]
-                                
-                            print('Sex of target: ' + target_sex)
                             print('Status: ' + str(friend_status['response'][0]['friend_status']))
                             time.sleep(0.2)
                             if 'response' in friend_status:
                                 #Если нет, то отправляем заявку в друзья
-                                if int(friend_status['response'][0]['friend_status']) == 0 and liker_sex in list_sex:
+                                if int(friend_status['response'][0]['friend_status']) == 0 and int(liker['response'][0]['sex']) == 1:
                                     add = add_friend(liker_id, vk_token)
                                     print('Add friend: ' + liker['response'][0]['first_name'] + ' ' + str(add))
                                     time.sleep(0.2)
@@ -504,7 +496,9 @@ def process_likes(data):
     
     count = 0
     total_likes = 0
-    #user = User.get(user_id = from_user_id)
+    user = User.get(user_id = from_user_id)
+    lf = len(Friend.select().join(User).where(User.user_id == from_user_id))
+    send_msg(chat_id, str(lf))
     for user in Friend.select().join(User).where(User.user_id == from_user_id):
         print('Use: ' + user.first_name)
         count += 1
