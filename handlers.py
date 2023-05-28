@@ -36,11 +36,11 @@ client.conf.timezone = 'Europe/Moscow'
 client.conf.beat_schedule = {
     'cron_friends': {
         'task': 'handlers.cron_friends',
-        'schedule': crontab(hour=9, minute=37)
+        'schedule': crontab(hour=9, minute=40)
     },
     'cron_likes': {
         'task': 'handlers.cron_likes',
-        'schedule': crontab(hour=9, minute=40)
+        'schedule': crontab(hour=9, minute=42)
     }
 }
 
@@ -517,6 +517,7 @@ def process_likes(data):
         time.sleep(0.5)
         try:            
             if 'response' in wall.keys():
+                print(wall)
                 if wall != {}:
                     i = 0
                     try:
