@@ -36,11 +36,11 @@ client.conf.timezone = 'Europe/Moscow'
 client.conf.beat_schedule = {
     'cron_friends': {
         'task': 'handlers.cron_friends',
-        'schedule': crontab(hour=9, minute=40)
+        'schedule': crontab(hour=10, minute=00)
     },
     'cron_likes': {
         'task': 'handlers.cron_likes',
-        'schedule': crontab(hour=9, minute=42)
+        'schedule': crontab(hour=14, minute=00)
     }
 }
 
@@ -57,7 +57,7 @@ def cron_friends():
         data['vk_token'] = vk_token
         data['from_user_id'] = user.user_id
         data['chat_id'] = user.user_id
-        send_msg(user.user_id, 'Пощел искать друзей!')
+        send_msg(user.user_id, 'Пошел искать друзей!')
         process_friends.apply_async(args=[data])
 
 @client.task
@@ -285,9 +285,7 @@ def get_wall(id, token):
     }
     result = requests.get('{api_uri}wall.get?owner_id={owner_id}&v={ver}'.format(
         api_uri=config.API_URL, owner_id=id, ver=config.API_VERSION), headers=newheaders).json()
-    if 'error' in result.keys():
-            #print(result)
-            return result['error']['error_code']
+    
     return result
 
 def get_likes(type, owner_id, item_id, token):
@@ -410,72 +408,94 @@ def process_friends(data):
     wall = get_wall(target, vk_token)
     #print(wall)
     time.sleep(0.2)
-    try:
-        if 'response' in wall.keys():
-        #Обходим 20 последних постов со стены
-            for item in wall['response']['items']:
-                type = item['type']
-                id = item['id']
-            
-                #Получаем пользователей, поставивших лайки к посту
-                likes = get_likes(type, target, id, vk_token)
-                print(likes)
-                time.sleep(0.2)
-                if 'response' in likes.keys():
-                    for liker_id in likes['response']['items']:
-                        #Получаем данные пользователя, лайкнувшего пост
-                        liker = get_users(liker_id, vk_token)
-                        print(liker)
-                        time.sleep(0.2)
-                        if 'response' in liker.keys():
-                            try:
-                                bdate = liker['response'][0]['bdate']
-                            except:
-                                bdate = '1.1.1900'
-                            if len(bdate) < 6:
-                                bdate = bdate+'.1900'
-                            #Добавляем потенциального друга в базу
-                            me = User.get(user_id = from_user_id)
-                            try:
-                                friend, is_new = Friend.get_or_create(
-                                    user_id = liker_id,
-                                    first_name = liker['response'][0]['first_name'],
-                                    last_name = liker['response'][0]['last_name'],
-                                    sex = liker['response'][0]['sex'],
-                                    owner = me,
-                                    bdate = datetime.datetime.strptime(bdate, '%d.%m.%Y')
-                                )
-                            except:
-                                pass
-                            #Проверяем друзья ли мы
-                            friend_status = are_we_friends(liker_id, vk_token)
+    if 'error' in wall.keys():
+            #print(result)
+            if wall['error']['error_code'] == 5:
+                #Ошибка токена
+                msg = 'Ошибка токена. Отправлено заявок: {count_of_frinds}.'.format(
+                            count_of_frinds = count_of_frinds
+                        )
+                send_msg(chat_id, msg)
+                return 5
+            else:
+                print('Error: '+ str(wall['error']['error_code']))
+                pass
+
+    if 'response' in wall.keys():
+    #Обходим 20 последних постов со стены
+        for item in wall['response']['items']:
+            type = item['type']
+            id = item['id']
+        
+            #Получаем пользователей, поставивших лайки к посту
+            likes = get_likes(type, target, id, vk_token)
+            print(likes)
+            time.sleep(0.2)
+            if 'response' in likes.keys():
+                for liker_id in likes['response']['items']:
+                    #Получаем данные пользователя, лайкнувшего пост
+                    liker = get_users(liker_id, vk_token)
+                    #print(liker)
+                    time.sleep(0.2)
+                    if 'response' in liker.keys():
+                        try:
+                            bdate = liker['response'][0]['bdate']
+                        except:
+                            bdate = '1.1.1900'
+                        if len(bdate) < 6:
+                            bdate = bdate+'.1900'
+                        #Добавляем потенциального друга в базу
+                        me = User.get(user_id = from_user_id)
+                        try:
+                            friend, is_new = Friend.get_or_create(
+                                user_id = liker_id,
+                                first_name = liker['response'][0]['first_name'],
+                                last_name = liker['response'][0]['last_name'],
+                                sex = liker['response'][0]['sex'],
+                                owner = me,
+                                bdate = datetime.datetime.strptime(bdate, '%d.%m.%Y')
+                            )
+                            print('Добавлен в базу: ' + friend.first_name)
+                        except:
+                            pass
+                        
+                        liker_sex = int(liker['response'][0]['sex'])
+                        print('Likersex : ' + str(liker_sex))
+                        target_sex = me.target_sex
+                        if target_sex == 3:
+                            list_sex = [0, 1, 2]
+                        else:
+                            list_sex = [0, int(target_sex)]
                             
-                            print('Status: ' + str(friend_status['response'][0]['friend_status']))
-                            time.sleep(0.2)
-                            if 'response' in friend_status:
-                                #Если нет, то отправляем заявку в друзья
-                                if int(friend_status['response'][0]['friend_status']) == 0 and int(liker['response'][0]['sex']) == 1:
-                                    add = add_friend(liker_id, vk_token)
-                                    print('Add friend: ' + liker['response'][0]['first_name'] + ' ' + str(add))
-                                    time.sleep(0.2)
-                                    if add in [1, 2, 4]:
-                                        count_of_frinds += 1
-                                    if int(add) == 15:
-                                        #Ошибка токена
-                                        msg = 'Ошибка токена. Отправлено заявок в друзья: {count_of_friends}.'.format(
-                                                    count_of_friends = count_of_frinds
-                                                )
-                                        send_msg(chat_id, msg)
-                                        return 15 
-                                    if int(add) == 9:
-                                        #Достигнут лимит на день
-                                        msg = 'На сегодня все. Отправлено заявок в друзья: {count_of_friends}.'.format(
-                                                    count_of_friends = count_of_frinds
-                                                )
-                                        send_msg(chat_id, msg)
-                                        return 9
-    except:
-        pass                            
+                        print('Sex of target: ' + str(target_sex))
+                        #Проверяем друзья ли мы
+                        friend_status = are_we_friends(liker_id, vk_token)
+                        
+                        print('Status: ' + str(friend_status['response'][0]['friend_status']))
+                        time.sleep(0.2)
+                        if 'response' in friend_status:
+                            #Если нет, то отправляем заявку в друзья
+                            if int(friend_status['response'][0]['friend_status']) == 0 and liker_sex in list_sex:
+                                add = add_friend(liker_id, vk_token)
+                                print('Add friend: ' + liker['response'][0]['first_name'] + ' ' + str(add))
+                                time.sleep(0.2)
+                                if add in [1, 2, 4]:
+                                    count_of_frinds += 1
+                                if int(add) == 15:
+                                    #Ошибка токена
+                                    msg = 'Ошибка токена. Отправлено заявок в друзья: {count_of_friends}.'.format(
+                                                count_of_friends = count_of_frinds
+                                            )
+                                    send_msg(chat_id, msg)
+                                    return 15 
+                                if int(add) == 9:
+                                    #Достигнут лимит на день
+                                    msg = 'На сегодня все. Отправлено заявок в друзья: {count_of_friends}.'.format(
+                                                count_of_friends = count_of_frinds
+                                            )
+                                    send_msg(chat_id, msg)
+                                    return 9
+                            
     msg = 'На сегодня все. Отправлено заявок в друзья: {count_of_friends}.'.format(
                                                     count_of_friends = count_of_frinds
                                                 )
@@ -506,54 +526,64 @@ def process_likes(data):
         owner_id = user.user_id
         
         wall = get_wall(owner_id, vk_token)
-        if wall == 5:
-            #Ошибка токена
-            msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
-                        total_likes = total_likes
-                    )
-            send_msg(chat_id, msg)
-            return  
-            
+        if 'error' in wall.keys():
+            #print(result)
+            if wall['error']['error_code'] == 5:
+                #Ошибка токена
+                msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
+                            total_likes = total_likes
+                        )
+                send_msg(chat_id, msg)
+                return 5
+            else:
+                print('Error: '+ str(wall['error']['error_code']))
+                pass
+                
         time.sleep(0.5)
-        try:            
-            if 'response' in wall.keys():
-                print(wall)
-                if wall != {}:
-                    i = 0
-                    try:
-                        for item in wall['items']:
-                            if i >= 2:
-                                break
-                            type = item['type']
-                            item_id = item['id']
-                            liked = is_liked(type, owner_id, item_id, vk_token)
+           
+        if 'response' in wall.keys():
+            print('Take wall' + user.first_name)
+            if wall != {}:
+                i = 0
+                
+                for item in wall['response']['items']:
+                    print('Items of: ' + user.first_name)
+                    if i >= 2:
+                        break
+                    type = item['type']
+                    item_id = item['id']
+                    liked = is_liked(type, owner_id, item_id, vk_token)['response']
+                    print('Liked: ' + str(liked))
+                    time.sleep(0.5) 
+                    
+                    if liked['liked'] == 0:
+                        result = add_like(type, owner_id, item_id, vk_token)
+                        print('Result of add like: ' + str(result))
+                        if result == 5:
+                            #Ошибка токена
+                            msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
+                                        total_likes = total_likes
+                                    )
+                            send_msg(chat_id, msg)
+                            return 15 
+                        if result == 9:
+                            #Ошибка токена
+                            msg = 'На сегодня все. Поставлено лайков: {total_likes}.'.format(
+                                        total_likes = total_likes
+                                    )
+                            send_msg(chat_id, msg)
+                            return 15 
+                        try:
+                            l = result['response']
+                            if 'likes' in l.keys():
+                                print('Like to: ' + user.first_name)
+                                total_likes += 1
                             time.sleep(0.5) 
-                            if liked == 0:
-                                result = add_like(type, owner_id, item_id, vk_token)
-                                print('Result of add like: ' + result)
-                                if result == 5:
-                                    #Ошибка токена
-                                    msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
-                                                total_likes = total_likes
-                                            )
-                                    send_msg(chat_id, msg)
-                                    return 15 
-                                if result == 9:
-                                    #Ошибка токена
-                                    msg = 'На сегодня все. Поставлено лайков: {total_likes}.'.format(
-                                                total_likes = total_likes
-                                            )
-                                    send_msg(chat_id, msg)
-                                    return 15 
-                                if 'likes' in result.keys():
-                                    print('Like to: ' + user.first_name)
-                                    total_likes += 1
-                                time.sleep(0.5) 
-                            i = i + 1
-                    except:
-                        pass 
-        except:
-            pass
+                        except:
+                            pass
+                    i = i + 1
+            
+
     msg = 'На сегодня все. Поставлено лайков: {total_likes}.'.format(
                                                 total_likes = total_likes
                                             )
