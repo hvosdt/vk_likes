@@ -36,11 +36,11 @@ client.conf.timezone = 'Europe/Moscow'
 client.conf.beat_schedule = {
     'cron_friends': {
         'task': 'handlers.cron_friends',
-        'schedule': crontab(hour=10, minute=00)
+        'schedule': crontab(hour=config.FRIENDS_HOUR, minute=config.FRIENDS_MINUTE)
     },
     'cron_likes': {
         'task': 'handlers.cron_likes',
-        'schedule': crontab(hour=14, minute=26)
+        'schedule': crontab(config.LIKES_HOUR, minute=config.LIKES_MINUTE)
     }
 }
 
@@ -392,19 +392,22 @@ def add_like(type, owner_id, item_id, token):
         #print(result)
         if result['error']['error_code'] == 14:
             print(result['error']['captcha_sid'])
-            captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
-            print(result['error']['captcha_img'])
-            print(captcha_key)
-            result = requests.get(
-                '{api_uri}likes.add?type={type}&owner_id={owner_id}&item_id={item_id}&captcha_sid={sid}&captcha_key={key}&v={ver}'.format(
-                api_uri = config.API_URL, 
-                type = type,
-                owner_id = owner_id,
-                item_id = item_id,
-                sid = result['error']['captcha_sid'],
-                key = captcha_key,
-                ver = config.API_VERSION), headers=newheaders).json()
-            #print(result)
+            try:
+                captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
+                print(result['error']['captcha_img'])
+                print(captcha_key)
+                result = requests.get(
+                    '{api_uri}likes.add?type={type}&owner_id={owner_id}&item_id={item_id}&captcha_sid={sid}&captcha_key={key}&v={ver}'.format(
+                    api_uri = config.API_URL, 
+                    type = type,
+                    owner_id = owner_id,
+                    item_id = item_id,
+                    sid = result['error']['captcha_sid'],
+                    key = captcha_key,
+                    ver = config.API_VERSION), headers=newheaders).json()
+                #print(result)
+            except:
+                print('captcha error')
             if 'error' in result.keys():
                 #print(result)
                 return result['error']['error_code']
