@@ -391,7 +391,8 @@ def add_like(type, owner_id, item_id, token):
     if 'error' in result.keys():
         #print(result)
         if result['error']['error_code'] == 14:
-            captcha_key = vc.solve(sid=result['error']['captcha_sid'])
+            print(result['error']['captcha_sid'])
+            captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
             print(result['error']['captcha_img'])
             print(captcha_key)
             result = requests.get(
