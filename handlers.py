@@ -40,7 +40,7 @@ client.conf.beat_schedule = {
     },
     'cron_likes': {
         'task': 'handlers.cron_likes',
-        'schedule': crontab(config.LIKES_HOUR, minute=config.LIKES_MINUTE)
+        'schedule': crontab(hour=config.LIKES_HOUR, minute=config.LIKES_MINUTE)
     }
 }
 
