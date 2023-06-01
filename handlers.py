@@ -153,7 +153,7 @@ def find_target(url, token):
     #print(result)
     try:
         if result['response'][0]['id'] != []:
-            return result['response'][0]['id']
+            return ('-' + str(result['response'][0]['id']))
     except:
         pass
         
@@ -170,8 +170,6 @@ def find_target(url, token):
         pass
     
     return result
-    
-    return vk_target
     
 # Начинаем наш диалог
 @dp.message_handler(commands=['token'])
@@ -391,7 +389,7 @@ def add_like(type, owner_id, item_id, token):
     if 'error' in result.keys():
         #print(result)
         if result['error']['error_code'] == 14:
-            print(result['error']['captcha_sid'])
+            print(result)
             try:
                 captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
                 print(result['error']['captcha_img'])
@@ -505,13 +503,13 @@ def process_friends(data):
                                     return 15 
                                 if int(add) == 9:
                                     #Достигнут лимит на день
-                                    msg = 'На сегодня все. Отправлено заявок в друзья: {count_of_friends}.'.format(
+                                    msg = 'На сегодня все. Достигнут дневной лимит. Отправлено заявок в друзья: {count_of_friends}.'.format(
                                                 count_of_friends = count_of_frinds
                                             )
                                     send_msg(chat_id, msg)
                                     return 9
                             
-    msg = 'На сегодня все. Отправлено заявок в друзья: {count_of_friends}.'.format(
+    msg = 'На сегодня все. Похоже, что пора поставить новую цель. Отправлено заявок в друзья: {count_of_friends}.'.format(
                                                     count_of_friends = count_of_frinds
                                                 )
     send_msg(chat_id, msg)
