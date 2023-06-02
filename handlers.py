@@ -389,23 +389,29 @@ def add_like(type, owner_id, item_id, token):
     if 'error' in result.keys():
         #print(result)
         if result['error']['error_code'] == 14:
-            print(result)
+            #print(result)
+            #captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
+            print(result['error']['captcha_img'])
+            #print(captcha_key)
+            URL = result['error']['captcha_img']
+            response = requests.get(URL)
+            filename = str(result['error']['captcha_sid']) + '.png'
+            open(filename, "wb").write(response.content)
             try:
-                captcha_key = vc.solve(sid=int(result['error']['captcha_sid']))
-                print(result['error']['captcha_img'])
+                captcha_key = vc.solve(image=filename)
                 print(captcha_key)
-                result = requests.get(
-                    '{api_uri}likes.add?type={type}&owner_id={owner_id}&item_id={item_id}&captcha_sid={sid}&captcha_key={key}&v={ver}'.format(
-                    api_uri = config.API_URL, 
-                    type = type,
-                    owner_id = owner_id,
-                    item_id = item_id,
-                    sid = result['error']['captcha_sid'],
-                    key = captcha_key,
-                    ver = config.API_VERSION), headers=newheaders).json()
-                #print(result)
             except:
-                print('captcha error')
+                captcha_key ='qwer'
+            result = requests.get(
+                '{api_uri}likes.add?type={type}&owner_id={owner_id}&item_id={item_id}&captcha_sid={sid}&captcha_key={key}&v={ver}'.format(
+                api_uri = config.API_URL, 
+                type = type,
+                owner_id = owner_id,
+                item_id = item_id,
+                sid = result['error']['captcha_sid'],
+                key = captcha_key,
+                ver = config.API_VERSION), headers=newheaders).json()
+        
             if 'error' in result.keys():
                 #print(result)
                 return result['error']['error_code']
