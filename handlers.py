@@ -16,7 +16,7 @@ from celery.schedules import crontab
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.message import ContentType
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.fsm.context import FSMContext
+from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
