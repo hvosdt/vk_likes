@@ -16,7 +16,7 @@ from celery.schedules import crontab
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.message import ContentType
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.dispatcher import FSMContext
+from aiogram.fsm.context import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -77,11 +77,19 @@ def cron_likes():
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.message):
+    data = {'user_id': message.from_user.id}
+    entry, is_new = User.get_or_create(
+                user_id = message.from_user.id
+            )
+    if not is_new:
+        query = User.update(data).where(User.user_id==message.from_user.id)
+        query.execute()
     await message.answer('Привет, {name}. Мне для работы нужно получить от тебя токен ВК. \nВот инструкция как это сделать: \n{instruction_url}. \nКак посмотришь, то переходи по ссылке: \n{create_url}.\nКогда сделаешь настройки то нажми \n/authorize'.format(
         name=message.from_user.first_name,
         instruction_url = 'https://youtu.be/JT5QR5jHhVA',
         create_url = 'https://vk.com/editapp?act=create'
                          ))
+    
 
 @dp.message_handler(commands=['likes'])
 async def likes(message: types.message):
