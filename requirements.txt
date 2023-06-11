@@ -4,7 +4,6 @@ vk-captchasolver
 peewee
 requests
 celery
-urllib
 tqdm
 vk-captchasolver
 postgres

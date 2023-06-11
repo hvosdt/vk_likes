@@ -14,6 +14,7 @@ class User(BaseModel):
     app_id = TextField(default='test')
     app_secret = TextField(default='test')
     target_sex = IntegerField(default=3)
+    is_active = BooleanField(default=True)
 
 
 class Friend(BaseModel):

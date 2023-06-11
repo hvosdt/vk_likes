@@ -62,7 +62,7 @@ def cron_friends():
 
 @client.task
 def cron_likes():
-    users = User.select()
+    users = User.select().where(User.is_active == True)
     for user in users:
         vk_token = get_VK_token(user.user_id)
         print(vk_token)
@@ -90,6 +90,32 @@ async def start(message: types.message):
         create_url = 'https://vk.com/editapp?act=create'
                          ))
     
+@dp.message_handler(commands=['deactivate'])
+async def deactivate(message: types.message):
+    data = {'is_active': False}
+    entry, is_new = User.get_or_create(
+                user_id = message.from_user.id
+            )
+    if not is_new:
+        query = User.update(data).where(User.user_id==message.from_user.id)
+        query.execute()
+    user = User.select().where(User.is_active == False)
+    
+    await message.answer('Ок, пока ничего не буду делать. Когда захочешь продолжить работу, то нажми \n/activate')
+
+@dp.message_handler(commands=['activate'])
+async def activate(message: types.message):
+    data = {'is_active': True}
+    entry, is_new = User.get_or_create(
+                user_id = message.from_user.id
+            )
+    if not is_new:
+        query = User.update(data).where(User.user_id==message.from_user.id)
+        query.execute()
+    user = User.select().where(User.is_active == True)
+    
+    await message.answer('Ок, продолжаем работать!')
+
 
 @dp.message_handler(commands=['likes'])
 async def likes(message: types.message):

@@ -6,10 +6,10 @@ from models import User, Friend, db
 #migrator = SqliteMigrator(db)
 migrator = PostgresqlMigrator(db)
 
-token = IntegerField(default=3)
+is_active = BooleanField(default=True)
 
 with db.atomic():
     #db.create_tables([User, Friend])
 
     migrate(
-        migrator.add_column('user', 'target_sex', token))
+        migrator.add_column('user', 'is_active', is_active))
