@@ -7,3 +7,6 @@ celery
 tqdm
 vk-captchasolver
 postgres
+flask
+flask-peewee
+flask_admin
