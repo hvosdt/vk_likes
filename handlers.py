@@ -46,7 +46,7 @@ client.conf.beat_schedule = {
 
 @client.task
 def cron_friends():
-    users = User.select()
+    users = User.select().where(User.do_friends == True)
     for user in users:
         vk_token = get_VK_token(user.user_id)
         target = get_target(user.user_id)
@@ -62,7 +62,7 @@ def cron_friends():
 
 @client.task
 def cron_likes():
-    users = User.select().where(User.is_active == True)
+    users = User.select().where(User.do_likes == True)
     for user in users:
         vk_token = get_VK_token(user.user_id)
         print(vk_token)
@@ -89,33 +89,6 @@ async def start(message: types.message):
         instruction_url = 'https://youtu.be/JT5QR5jHhVA',
         create_url = 'https://vk.com/editapp?act=create'
                          ))
-    
-@dp.message_handler(commands=['deactivate'])
-async def deactivate(message: types.message):
-    data = {'is_active': False}
-    entry, is_new = User.get_or_create(
-                user_id = message.from_user.id
-            )
-    if not is_new:
-        query = User.update(data).where(User.user_id==message.from_user.id)
-        query.execute()
-    user = User.select().where(User.is_active == False)
-    
-    await message.answer('Ок, пока ничего не буду делать. Когда захочешь продолжить работу, то нажми \n/activate')
-
-@dp.message_handler(commands=['activate'])
-async def activate(message: types.message):
-    data = {'is_active': True}
-    entry, is_new = User.get_or_create(
-                user_id = message.from_user.id
-            )
-    if not is_new:
-        query = User.update(data).where(User.user_id==message.from_user.id)
-        query.execute()
-    user = User.select().where(User.is_active == True)
-    
-    await message.answer('Ок, продолжаем работать!')
-
 
 @dp.message_handler(commands=['likes'])
 async def likes(message: types.message):
@@ -149,10 +122,6 @@ async def friends(message: types.message):
     return await message.answer('Процесс пощел! Как закончу - напишу результат')
     
 # создаём форму и указываем поля
-class Form(StatesGroup):
-    target = State()
-    token = State()
-
 class FormAuth(StatesGroup):
     app_id = State()
     app_secret = State()
@@ -204,27 +173,73 @@ def find_target(url, token):
         pass
     
     return result
+#Обновляем в базе action
+def update_action(user_id, action):
+    data = {'action': int(action)}
+    entry, is_new = User.get_or_create(
+            user_id = user_id
+        )
+    query = User.update(data).where(User.user_id==user_id)
+    query.execute()
+    entry = User.get(user_id = user_id)
     
-# Начинаем наш диалог
-@dp.message_handler(commands=['token'])
-async def token(message: types.Message):
-    await Form.token.set()
-    await message.reply("Привет! Укажи токен ВК.")
+ 
+inline_btn_1 = InlineKeyboardButton('Ставить лайки', callback_data='action_likes_btn')
+inline_btn_2 = InlineKeyboardButton('Добавлять друзей', callback_data='action_friends_btn')
+inline_btn_3 = InlineKeyboardButton('Делать все вместе', callback_data='action_all_btn')
+inline_btn_4 = InlineKeyboardButton('Ничего не делать', callback_data='action_none_btn')
+inline_kb1 = InlineKeyboardMarkup().add(inline_btn_1, inline_btn_2, inline_btn_3, inline_btn_4)
+   
+# Указать поведение
+@dp.message_handler(commands=['action'])
+async def action(message: types.Message):
+    await message.answer('Что мне делать?', reply_markup=inline_kb1)
+    
+@dp.callback_query_handler(lambda c: c.data == 'action_likes_btn')
+async def process_callback_button1(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    user_id = callback_query.from_user.id
+    data = {'do_likes': True}
+    entry, is_new = User.get_or_create(
+            user_id = user_id
+        )
+    query = User.update(data).where(User.user_id==user_id)
+    query.execute()
 
-# Сюда приходит ответ с именем
-@dp.message_handler(state=Form.token)
-async def process_token(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data = {'token': message.text}
-        entry, is_new = User.get_or_create(
-                user_id = message.from_user.id
-            )
-        query = User.update(data).where(User.user_id==message.from_user.id)
-        query.execute()
-    entry = User.get(user_id = message.from_user.id)
-    await message.answer('Токен принят!')
+@dp.callback_query_handler(lambda c: c.data == 'action_friends_btn')
+async def process_callback_button2(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    user_id = callback_query.from_user.id
+    data = {'do_friends': True}
+    entry, is_new = User.get_or_create(
+            user_id = user_id
+        )
+    query = User.update(data).where(User.user_id==user_id)
+    query.execute()
+    
+@dp.callback_query_handler(lambda c: c.data == 'action_all_btn')
+async def process_callback_button3(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    user_id = callback_query.from_user.id
+    data = {'do_friends': True,
+            'do_likes': True}
+    entry, is_new = User.get_or_create(
+            user_id = user_id
+        )
+    query = User.update(data).where(User.user_id==user_id)
+    query.execute()
 
-    await state.finish()
+@dp.callback_query_handler(lambda c: c.data == 'action_none_btn')
+async def process_callback_button4(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id)
+    user_id = callback_query.from_user.id
+    data = {'do_friends': False,
+            'do_likes': False}
+    entry, is_new = User.get_or_create(
+            user_id = user_id
+        )
+    query = User.update(data).where(User.user_id==user_id)
+    query.execute()
 
 #Принимаем таргет и пол
 @dp.message_handler(commands=['target'])

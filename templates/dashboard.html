@@ -16,7 +16,8 @@
         <tr>
           <th>user id</th>
           <th>target sex</th>
-          <th>is active</th>
+          <th>Do friends</th>
+          <th>Do likes</th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +25,8 @@
           <tr>
             <td>{{ user.user_id }}</td>
             <td>{{ user.target_sex }}</td>
-            <td>{{ user.is_active }}</td>
+            <td>{{ user.do_friends }}</td>
+            <td>{{ user.do_likes }}</td>
           </tr>
         {% endfor %}
       </tbody>
