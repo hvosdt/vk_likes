@@ -187,8 +187,7 @@ async def process_callback_female(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
-    print(entry.target_sex)
-    send_msg(user_id, 'Принято! ')
+    send_msg(user_id, 'Принято!')
 
 #Ловим target_sex
 @dp.callback_query_handler(lambda c: c.data == 'male_btn')
@@ -201,7 +200,7 @@ async def process_callback_male(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
-    print(entry.target_sex)
+    send_msg(user_id, 'Принято!')
 
 #Ловим target_sex    
 @dp.callback_query_handler(lambda c: c.data == 'allsex_btn')
@@ -214,7 +213,7 @@ async def process_callback_allsex(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
-    print(entry.target_sex)
+    send_msg(user_id, 'Принято!')
     
 
 # Начинаем наш диалог authorize

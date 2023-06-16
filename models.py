@@ -23,7 +23,7 @@ class Friend(BaseModel):
     owner = ForeignKeyField(User, backref='friends')
     first_name = TextField(default='Василиса')
     last_name = TextField(default='Пупкина')
-    sex = TextField(default='Женский')
+    sex = IntegerField(default=1)
     bdate = DateTimeField(default='01.1.1900')
     
 

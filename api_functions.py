@@ -89,7 +89,7 @@ def get_users(user_ids, token):
     'Authorization': 'Bearer '+ token
     }
     result = requests.get(
-        '{api_uri}users.get?user_ids={user_ids}&v={ver}&fields=sex,bdate'.format(
+        '{api_uri}users.get?user_ids={user_ids}&v={ver}&fields=sex,bdate,first_name_acc'.format(
         api_uri = config.API_URL, 
         user_ids= user_ids,
         ver = config.API_VERSION), headers=newheaders).json()
@@ -97,6 +97,21 @@ def get_users(user_ids, token):
             print(result)
             return result['error']['error_code']
     return result
+
+def get_group(target, token):
+    newheaders = {
+    'Authorization': 'Bearer '+ token
+    }
+    result = requests.get(
+        '{api_uri}groups.getById?group_id={q}&v={ver}'.format(
+        api_uri = config.API_URL, 
+        q = target,
+        ver = config.API_VERSION), headers=newheaders).json()
+    if 'error' in result.keys():
+            print(result)
+            return result['error']['error_code']
+    return result
+
 
 def get_friends(token):
     newheaders = {
@@ -109,14 +124,15 @@ def get_friends(token):
     return result
 
 
-def add_friend(user_id, token):
+def add_friend(user_id, token, hello_text):
     newheaders = {
     'Authorization': 'Bearer '+ token
     }
     result = requests.get(
-        '{api_uri}friends.add?user_id={user_id}&v={ver}'.format(
+        '{api_uri}friends.add?user_id={user_id}&text={text}&v={ver}'.format(
         api_uri = config.API_URL, 
         user_id= user_id,
+        text = hello_text,
         ver = config.API_VERSION), headers=newheaders).json()
     if 'error' in result.keys():
             print(result)
