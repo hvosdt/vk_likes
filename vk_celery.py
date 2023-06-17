@@ -207,10 +207,11 @@ def process_likes(data):
     
     count = 0
     total_likes = 0
-    
+    user = User.get(User.user_id == from_user_id)
+    my_vk_id = user.vk_id
     friends = get_friends(vk_token)
     if 'error' in friends.keys():
-        print(result)
+        #print(result)
         if friends['error']['error_code'] == 5:
             #Ошибка токена
             msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
@@ -226,23 +227,22 @@ def process_likes(data):
            
     if 'response' in friends.keys():
         res = friends['response']
-        #print(friends['response'])
+        
         l_friends = res['count']
         list_of_friends = res['items']
-        #user = User.get(user_id = from_user_id)
-        #lf = len(Friend.select().join(User).where(User.user_id == from_user_id))
+        
         send_msg(chat_id, 'У вас сейчас {l} друзей. Неплохо для начала'.format(
             l = l_friends
         ))
         for item in list_of_friends:
-            #print('Use: ' + owner_id)
+        
             count += 1
             wall = {}
             owner_id = item
             
             wall = get_wall(owner_id, vk_token)
             if 'error' in wall.keys():
-                #print(result)
+                
                 if wall['error']['error_code'] == 5:
                     #Ошибка токена
                     msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(
@@ -252,28 +252,42 @@ def process_likes(data):
                     return 5
                 else:
                     print('Error: '+ str(wall['error']['error_code']))
-                    pass
-                    
-            time.sleep(0.5)
-            
+
             if 'response' in wall.keys():
-                #print('Take wall' + owner_id)
+                
                 if wall != {}:
                     i = 0
                     
                     for item in wall['response']['items']:
-                        #print('Items of: ' + user.first_name)
+                        
                         if i >= 2:
                             break
                         type = item['type']
                         item_id = item['id']
-                        liked = is_liked(type, owner_id, item_id, vk_token)['response']
-                        #print('Liked: ' + str(liked))
-                        time.sleep(0.5) 
+                        try:
+                            views = int(item['views']['count'])
+                        except:
+                            break
                         
-                        if liked['liked'] == 0:
+                        likes_len = 0
+                        response = get_likes(type, owner_id, item_id, vk_token)
+                        likes_list = []
+                        if 'response' in response.keys():
+                            likes_len = int(response['response']['count'])
+                            for item in response['response']['items']:
+                                likes_list.append(item)
+                        if my_vk_id in likes_list:
+                            is_liked = True
+                        else:
+                            is_liked = False
+
+                        time.sleep(0.2) 
+                        likes_percent = (likes_len/views*100)//1
+                        
+                        if not is_liked and likes_percent >10:                                                        
+                            #Стваим лайк
                             result = add_like(type, owner_id, item_id, vk_token)
-                            #print('Result of add like: ' + str(result))
+                            
                             if result == 5:
                                 #Ошибка токена
                                 msg = 'Ошибка токена. Поставлено лайков: {total_likes}.'.format(

@@ -9,6 +9,7 @@ class BaseModel(Model):
 
 class User(BaseModel):
     user_id = TextField(unique=True)
+    vk_id = TextField(default='123')
     target = TextField(default='test')
     token = TextField(default='test')
     app_id = TextField(default='test')

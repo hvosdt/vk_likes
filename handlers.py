@@ -3,7 +3,7 @@ import config
 from models import User
 from urllib.parse import urlparse, parse_qs
 
-from api_functions import get_VK_token, get_target, find_target, send_msg
+from api_functions import get_VK_token, get_target, find_target, send_msg, get_profile_info
 from vk_celery import process_friends, process_likes
 
 from aiogram import Bot, Dispatcher, types
@@ -20,7 +20,14 @@ dp = Dispatcher(bot, storage=storage)
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.message):
-    data = {'user_id': message.from_user.id}
+    vk_token = get_VK_token(message.from_user.id)
+    response = get_profile_info(vk_token)
+    if 'response' in response.keys():
+        vk_id = response['response']['id']
+    else:
+        vk_id = 1
+    data = {'user_id': message.from_user.id,
+            'vk_id': vk_id}
     entry, is_new = User.get_or_create(
                 user_id = message.from_user.id
             )
@@ -107,6 +114,7 @@ async def process_callback_button1(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
+    send_msg(user_id, 'Ок, понял.')
 
 @dp.callback_query_handler(lambda c: c.data == 'action_friends_btn')
 async def process_callback_button2(callback_query: types.CallbackQuery):
@@ -118,6 +126,7 @@ async def process_callback_button2(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
+    send_msg(user_id, 'Ок, понял.')
     
 @dp.callback_query_handler(lambda c: c.data == 'action_all_btn')
 async def process_callback_button3(callback_query: types.CallbackQuery):
@@ -130,6 +139,7 @@ async def process_callback_button3(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
+    send_msg(user_id, 'Ок, понял.')
 
 @dp.callback_query_handler(lambda c: c.data == 'action_none_btn')
 async def process_callback_button4(callback_query: types.CallbackQuery):
@@ -142,6 +152,7 @@ async def process_callback_button4(callback_query: types.CallbackQuery):
         )
     query = User.update(data).where(User.user_id==user_id)
     query.execute()
+    send_msg(user_id, 'Ок, понял.')
 
 #Клавиатура для target_sex    
 inline_sex_btn_1 = InlineKeyboardButton('Женский', callback_data='female_btn')

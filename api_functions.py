@@ -123,6 +123,15 @@ def get_friends(token):
         ver = config.API_VERSION), headers=newheaders).json()
     return result
 
+def get_profile_info(token):
+    newheaders = {
+    'Authorization': 'Bearer '+ token
+    }
+    result = requests.get(
+        '{api_uri}account.getProfileInfo?v={ver}'.format(
+        api_uri = config.API_URL,
+        ver = config.API_VERSION), headers=newheaders).json()
+    return result
 
 def add_friend(user_id, token, hello_text):
     newheaders = {

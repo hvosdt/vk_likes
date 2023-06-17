@@ -9,13 +9,13 @@ migrator = PostgresqlMigrator(db)
 #do_friends = BooleanField(default=True)
 #do_likes = BooleanField(default=True)
 
-sex = IntegerField(default=1)
+vk_id = TextField(default='123')
 
 with db.atomic():
-    db.create_tables([Friend])
+    #db.create_tables([Friend])
     #db.drop_tables(Friend)
 
-    #migrate(
-    #    migrator.add_column('friend', 'sex', sex))
+    migrate(
+        migrator.add_column('user', 'vk_id', vk_id))
     
 
