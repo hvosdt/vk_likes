@@ -20,6 +20,9 @@ dp = Dispatcher(bot, storage=storage)
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.message):
+    entry, is_new = User.get_or_create(
+                user_id = message.from_user.id
+            )
     vk_token = get_VK_token(message.from_user.id)
     response = get_profile_info(vk_token)
     if 'response' in response.keys():
@@ -28,9 +31,6 @@ async def start(message: types.message):
         vk_id = 1
     data = {'user_id': message.from_user.id,
             'vk_id': vk_id}
-    entry, is_new = User.get_or_create(
-                user_id = message.from_user.id
-            )
     if not is_new:
         query = User.update(data).where(User.user_id==message.from_user.id)
         query.execute()
