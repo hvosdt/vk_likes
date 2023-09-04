@@ -67,7 +67,7 @@ async def friends(message: types.message):
     data['from_user_id'] = message.from_user.id
     data['chat_id'] = message.chat.id
 
-    process_friends.apply_async(args=[data])
+    process_friends.delay(args=[data])
     
     return await message.answer('Процесс пощел! Как закончу - напишу результат')
     
@@ -154,7 +154,7 @@ async def process_callback_button4(callback_query: types.CallbackQuery):
     query.execute()
     send_msg(user_id, 'Ок, понял.')
 
-#Клавиатура для target_sex    
+#Клавиатура для target_sex
 inline_sex_btn_1 = InlineKeyboardButton('Женский', callback_data='female_btn')
 inline_sex_btn_2 = InlineKeyboardButton('Мужской', callback_data='male_btn')
 inline_sex_btn_3 = InlineKeyboardButton('Всех', callback_data='allsex_btn')
