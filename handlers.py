@@ -1,4 +1,5 @@
 import config
+import logging
 
 from models import User
 from urllib.parse import urlparse, parse_qs
@@ -13,6 +14,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from magic_filter import F
+
+logging.basicConfig(level=logging.DEBUG, filename='vk_like.log')
 
 bot = Bot(token=config.TELEGRAM_TOKEN)
 storage = MemoryStorage()
@@ -67,7 +70,7 @@ async def friends(message: types.message):
     data['from_user_id'] = message.from_user.id
     data['chat_id'] = message.chat.id
 
-    process_friends.delay(args=[data])
+    process_friends.apply_async(args=[data])
     
     return await message.answer('Процесс пощел! Как закончу - напишу результат')
     
