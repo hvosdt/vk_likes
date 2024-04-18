@@ -1,7 +1,7 @@
 from peewee import *
 import config
 
-db = PostgresqlDatabase(config.DB_NAME, user=config.DB_USERNAME, password=config.DB_PASSWORD)
+db = PostgresqlDatabase(config.DB_NAME, user=config.DB_USERNAME, password=config.DB_PASSWORD, host='vk_postgres')
 
 class BaseModel(Model):
     class Meta:
@@ -27,5 +27,12 @@ class Friend(BaseModel):
     sex = IntegerField(default=1)
     bdate = DateTimeField(default='01.1.1900')
     
-
-     
+with db.atomic():
+    #db.drop_tables([User])
+    try:
+        db.create_tables([User])
+    except: pass
+    #db.evolve(interactive=True)
+    
+    #migrate(
+    #    migrator.add_column('user', 'order_type', order_type))    

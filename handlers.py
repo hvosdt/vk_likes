@@ -15,7 +15,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from magic_filter import F
 
-logging.basicConfig(level=logging.DEBUG, filename='vk_like.log')
+#logging.basicConfig(level=logging.DEBUG, filename='vk_like.log')
 
 bot = Bot(token=config.TELEGRAM_TOKEN)
 storage = MemoryStorage()

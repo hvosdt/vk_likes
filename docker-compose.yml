@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: vk_postgres
+    restart: always
+    volumes:
+      - postgres_data_vk:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    ports:
+      - "5436:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: vk_redis  
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vk_bot
+    restart: always
+    command: python main.py
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - celery
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vk_celery
+    restart: always
+    command: celery -A vk_celery.client worker --loglevel=INFO
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+      - db
+  
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vk_beat
+    restart: always
+    command: celery -A vk_celery.client beat --loglevel=INFO
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - redis 
+      - db
+
+volumes:
+  postgres_data_vk:

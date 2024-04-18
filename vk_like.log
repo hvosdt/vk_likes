@@ -1,0 +1,547 @@
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [401] "'{"ok":false,"error_code":401,"description":"Unauthorized"}'"
+WARNING:aiogram:Goodbye!
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [200] "'{"ok":true,"result":{"id":6003824003,"is_bot":true,"first_name":"vk_likes_bot","username":"vk_likes_bot","can_join_groups":true,"can_read_all_group_messages":false,"supports_inline_queries":false,"can_connect_to_business":false}}'"
+INFO:aiogram:Bot: vk_likes_bot [@vk_likes_bot]
+DEBUG:aiogram:Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG:aiogram:Make request: "deleteWebhook" with data: "{'drop_pending_updates': True}" and files "None"
+DEBUG:aiogram:Response for deleteWebhook: [200] "'{"ok":true,"result":true,"description":"Webhook is already deleted"}'"
+WARNING:aiogram:Updates were skipped successfully.
+INFO:aiogram.dispatcher.dispatcher:Start polling.
+DEBUG:aiogram:Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:aiogram:Make request: "getMe" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getMe: [200] "'{"ok":true,"result":{"id":6003824003,"is_bot":true,"first_name":"vk_likes_bot","username":"vk_likes_bot","can_join_groups":true,"can_read_all_group_messages":false,"supports_inline_queries":false,"can_connect_to_business":false}}'"
+INFO:aiogram:Bot: vk_likes_bot [@vk_likes_bot]
+DEBUG:aiogram:Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG:aiogram:Make request: "deleteWebhook" with data: "{'drop_pending_updates': True}" and files "None"
+DEBUG:aiogram:Response for deleteWebhook: [200] "'{"ok":true,"result":true,"description":"Webhook is already deleted"}'"
+WARNING:aiogram:Updates were skipped successfully.
+INFO:aiogram.dispatcher.dispatcher:Start polling.
+DEBUG:aiogram:Make request: "getWebhookInfo" with data: "{}" and files "None"
+DEBUG:aiogram:Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163770,\n"message":{"message_id":1850,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434889,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:peewee:('SELECT "t1"."id", "t1"."user_id", "t1"."vk_id", "t1"."target", "t1"."token", "t1"."app_id", "t1"."app_secret", "t1"."target_sex", "t1"."is_active", "t1"."do_friends", "t1"."do_likes" FROM "user" AS "t1" WHERE ("t1"."user_id" = %s) LIMIT %s OFFSET %s', ['182149382', 1, 0])
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-9' coro=<Dispatcher._process_polling_updates() done, defined at /usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=OperationalError('connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n')>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/app/handlers.py", line 26, in start
+    entry, is_new = User.get_or_create(
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 6851, in get_or_create
+    return query.get(), False
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 7266, in get
+    return clone.execute(database)[0]
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2018, in inner
+    return method(self, database, *args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2089, in execute
+    return self._execute(database)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2262, in _execute
+    cursor = database.execute(self)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3312, in execute
+    return self.execute_sql(sql, params)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3304, in execute_sql
+    cursor.execute(sql, params or ())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163771, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163771,\n"message":{"message_id":1851,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434908,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:peewee:('SELECT "t1"."id", "t1"."user_id", "t1"."vk_id", "t1"."target", "t1"."token", "t1"."app_id", "t1"."app_secret", "t1"."target_sex", "t1"."is_active", "t1"."do_friends", "t1"."do_likes" FROM "user" AS "t1" WHERE ("t1"."user_id" = %s) LIMIT %s OFFSET %s', ['182149382', 1, 0])
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-12' coro=<Dispatcher._process_polling_updates() done, defined at /usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=OperationalError('connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n')>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/app/handlers.py", line 26, in start
+    entry, is_new = User.get_or_create(
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 6851, in get_or_create
+    return query.get(), False
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 7266, in get
+    return clone.execute(database)[0]
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2018, in inner
+    return method(self, database, *args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2089, in execute
+    return self._execute(database)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2262, in _execute
+    cursor = database.execute(self)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3312, in execute
+    return self.execute_sql(sql, params)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3304, in execute_sql
+    cursor.execute(sql, params or ())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163772, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163772,\n"message":{"message_id":1852,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434913,"text":"/target","entities":[{"offset":0,"length":7,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:aiogram:Make request: "sendMessage" with data: "{'chat_id': 182149382, 'text': 'Отправь ссылку на пользователя или сообщество ВК', 'reply_to_message_id': 1852}" and files "None"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163773, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":1853,"from":{"id":6003824003,"is_bot":true,"first_name":"vk_likes_bot","username":"vk_likes_bot"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434913,"reply_to_message":{"message_id":1852,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434913,"text":"/target","entities":[{"offset":0,"length":7,"type":"bot_command"}]},"text":"\\u041e\\u0442\\u043f\\u0440\\u0430\\u0432\\u044c \\u0441\\u0441\\u044b\\u043b\\u043a\\u0443 \\u043d\\u0430 \\u043f\\u043e\\u043b\\u044c\\u0437\\u043e\\u0432\\u0430\\u0442\\u0435\\u043b\\u044f \\u0438\\u043b\\u0438 \\u0441\\u043e\\u043e\\u0431\\u0449\\u0435\\u0441\\u0442\\u0432\\u043e \\u0412\\u041a"}}'"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163773,\n"message":{"message_id":1854,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434919,"text":"/authorize","entities":[{"offset":0,"length":10,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:peewee:('SELECT "t1"."id", "t1"."user_id", "t1"."vk_id", "t1"."target", "t1"."token", "t1"."app_id", "t1"."app_secret", "t1"."target_sex", "t1"."is_active", "t1"."do_friends", "t1"."do_likes" FROM "user" AS "t1" WHERE ("t1"."user_id" = %s) LIMIT %s OFFSET %s', ['182149382', 1, 0])
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<Dispatcher._process_polling_updates() done, defined at /usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=OperationalError('connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n')>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/app/handlers.py", line 176, in process_target
+    token = get_VK_token(message.from_user.id)
+  File "/app/api_functions.py", line 40, in get_VK_token
+    query = User.get(user_id = user_id)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 6818, in get
+    return sq.get()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 7266, in get
+    return clone.execute(database)[0]
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2018, in inner
+    return method(self, database, *args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2089, in execute
+    return self._execute(database)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2262, in _execute
+    cursor = database.execute(self)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3312, in execute
+    return self.execute_sql(sql, params)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3304, in execute_sql
+    cursor.execute(sql, params or ())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163774, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163774, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163774, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163774,\n"message":{"message_id":1855,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434960,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:peewee:('SELECT "t1"."id", "t1"."user_id", "t1"."vk_id", "t1"."target", "t1"."token", "t1"."app_id", "t1"."app_secret", "t1"."target_sex", "t1"."is_active", "t1"."do_friends", "t1"."do_likes" FROM "user" AS "t1" WHERE ("t1"."user_id" = %s) LIMIT %s OFFSET %s', ['182149382', 1, 0])
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-25' coro=<Dispatcher._process_polling_updates() done, defined at /usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=OperationalError('connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n')>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/app/handlers.py", line 176, in process_target
+    token = get_VK_token(message.from_user.id)
+  File "/app/api_functions.py", line 40, in get_VK_token
+    query = User.get(user_id = user_id)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 6818, in get
+    return sq.get()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 7266, in get
+    return clone.execute(database)[0]
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2018, in inner
+    return method(self, database, *args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2089, in execute
+    return self._execute(database)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2262, in _execute
+    cursor = database.execute(self)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3312, in execute
+    return self.execute_sql(sql, params)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3304, in execute_sql
+    cursor.execute(sql, params or ())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163775, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[{"update_id":142163775,\n"message":{"message_id":1856,"from":{"id":182149382,"is_bot":false,"first_name":"Dmitriy","username":"hvosdt","language_code":"en"},"chat":{"id":182149382,"first_name":"Dmitriy","username":"hvosdt","type":"private"},"date":1713434968,"text":"/action","entities":[{"offset":0,"length":7,"type":"bot_command"}]}}]}'"
+DEBUG:aiogram.dispatcher.dispatcher:Received 1 updates.
+DEBUG:peewee:('SELECT "t1"."id", "t1"."user_id", "t1"."vk_id", "t1"."target", "t1"."token", "t1"."app_id", "t1"."app_secret", "t1"."target_sex", "t1"."is_active", "t1"."do_friends", "t1"."do_likes" FROM "user" AS "t1" WHERE ("t1"."user_id" = %s) LIMIT %s OFFSET %s', ['182149382', 1, 0])
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<Dispatcher._process_polling_updates() done, defined at /usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py:407> exception=OperationalError('connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n')>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "/usr/local/lib/python3.9/site-packages/aiogram/dispatcher/handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "/app/handlers.py", line 176, in process_target
+    token = get_VK_token(message.from_user.id)
+  File "/app/api_functions.py", line 40, in get_VK_token
+    query = User.get(user_id = user_id)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 6818, in get
+    return sq.get()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 7266, in get
+    return clone.execute(database)[0]
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2018, in inner
+    return method(self, database, *args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2089, in execute
+    return self._execute(database)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 2262, in _execute
+    cursor = database.execute(self)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3312, in execute
+    return self.execute_sql(sql, params)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3304, in execute_sql
+    cursor.execute(sql, params or ())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3303, in execute_sql
+    cursor = self.cursor()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3293, in cursor
+    self.connect()
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3248, in connect
+    self._initialize_connection(self._state.conn)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3070, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 196, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3245, in connect
+    self._state.set_connection(self._connect())
+  File "/usr/local/lib/python3.9/site-packages/peewee.py", line 3986, in _connect
+    conn = psycopg2.connect(**params)
+  File "/usr/local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+peewee.OperationalError: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163776, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163776, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163776, 'timeout': 20}" and files "None"
+DEBUG:aiogram:Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+DEBUG:aiogram:Make request: "getUpdates" with data: "{'offset': 142163776, 'timeout': 20}" and files "None"
