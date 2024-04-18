@@ -30,9 +30,9 @@ class Friend(BaseModel):
 with db.atomic():
     #db.drop_tables([User])
     try:
-        db.create_tables([User])
-    except: pass
-    #db.evolve(interactive=True)
+        db.create_tables([User, Friend])
+    except:
+        db.evolve(interactive=False)
     
     #migrate(
     #    migrator.add_column('user', 'order_type', order_type))    
