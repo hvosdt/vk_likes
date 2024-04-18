@@ -28,9 +28,10 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - celery
+      - worker
+      - beat
 
-  celery:
+  worker:
     build:
       context: .
       dockerfile: Dockerfile
@@ -45,7 +46,7 @@ services:
       - redis
       - db
   
-  celery:
+  beat:
     build:
       context: .
       dockerfile: Dockerfile
