@@ -143,5 +143,4 @@ def vk_auth():
     return render_template('auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4())
 
 if __name__ == '__main__':
-    
-    app.run()
+    app.run(debug=True,host='0.0.0.0',port=5000)
