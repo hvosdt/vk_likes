@@ -34,14 +34,13 @@ def do_auth():
 def callback():
     if request.method == 'GET':
         params = request.args.to_dict()
-        
+        print(params)
         with open('vk_code.txt', 'w') as file:
-            file.write(str(params))
-        return params
+            file.write(str(params))        
         payload = json.loads(params['payload'])
         silent_token = payload['token']
         uuid = payload['uuid']
-        service_token = SERVICE_TOKEN
+        service_token = config.SERVICE_TOKEN
         data = {
             'token': silent_token,
             'access_token': service_token,
