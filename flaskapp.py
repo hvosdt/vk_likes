@@ -44,7 +44,7 @@ def callback():
         
 @app.route('/vk_auth')
 def vk_auth():    
-    return render_template('auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4())
+    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4())
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=5000)
