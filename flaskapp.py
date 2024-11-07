@@ -45,7 +45,7 @@ def callback():
         data = {
             'code': code,
             'client_id': client_id,
-            'redirect_url': config.REDIRECT_URL,
+            'redirect_uri': config.REDIRECT_URL,
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
