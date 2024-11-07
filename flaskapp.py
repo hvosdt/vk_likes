@@ -15,14 +15,22 @@ app.secret_key = 'your_secret_key'
 def index():    
     return render_template('index.html')
 
+@app.route('/do_auth', methods=['POST', 'GET'])
+def do_auth():
+    if request.method == 'POST':
+        data = request.json()
+        with open('vk_code.json', 'w') as file:
+            json.dump(data, file, indent=4)
+        return make_response(jsonify({'status': 'success'}), 200)
+        
 @app.route('/callback', methods=['GET'])
 def callback():
     group_id = 221262044
     if request.method == 'GET':
         params = request.args.to_dict()
         
-        #with open('vk_code.txt', 'w') as file:
-        #    file.write(str(params))
+        with open('vk_code.txt', 'w') as file:
+            file.write(str(params))
         payload = json.loads(params['payload'])
         silent_token = payload['token']
         uuid = payload['uuid']
