@@ -30,7 +30,7 @@ def do_auth():
         response.headers['Access-Control-Allow-Methods'] = ['GET', 'POST']
         return response 
         
-@app.route('/callback', methods=['GET'])
+@app.route('/callback', methods=['GET', 'POST'])
 def callback():
     response = make_response(jsonify({'status': 'success'}), 200)
     response.headers['Access-Control-Allow-Origin'] = '*'
