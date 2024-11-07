@@ -5,6 +5,10 @@ import config
 import requests
 import json
 from uuid import uuid4
+import base64
+import re
+import os
+import hashlib
 
 # initialize the Flask app
 app = Flask(__name__)
@@ -61,8 +65,14 @@ def callback():
         return make_response(jsonify(result), 200)    
         
 @app.route('/vk_auth')
-def vk_auth():    
-    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4())
+def vk_auth():
+    code_verifier = base64.urlsafe_b64encode(os.urandom(40)).decode('utf-8')
+    code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
+    
+    code_challenge = hashlib.sha256(code_verifier.encode('utf-8')).digest()
+    code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
+    code_challenge = code_challenge.replace('=', '')
+    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4(), CODE_CHALLENGE=code_challenge)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=5000)
