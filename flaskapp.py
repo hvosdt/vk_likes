@@ -53,6 +53,7 @@ def callback():
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
+            'code_verifier': session[state],
             'v': '5.131'
         }
         url = 'https://id.vk.com/oauth2/auth'
@@ -72,7 +73,10 @@ def vk_auth():
     code_challenge = hashlib.sha256(code_verifier.encode('utf-8')).digest()
     code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
     code_challenge = code_challenge.replace('=', '')
-    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=uuid4(), CODE_CHALLENGE=code_challenge)
+    
+    state = uuid4()
+    session[state] = code_verifier
+    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=5000)
