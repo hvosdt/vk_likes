@@ -75,7 +75,7 @@ def vk_auth():
     code_challenge = code_challenge.replace('=', '')
     
     state = uuid4()
-    session[state] = code_verifier
+    session[str(state)] = code_verifier
     return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
 
 if __name__ == '__main__':
