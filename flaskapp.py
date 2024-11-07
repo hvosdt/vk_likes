@@ -15,6 +15,14 @@ app.secret_key = 'your_secret_key'
 def index():    
     return render_template('index.html')
 
+@app.route('/do_auth', methods=['POST', 'GET'])
+def do_auth():
+    if request.method == 'POST':
+        data = request.json()
+        with open('vk_code.json', 'w') as file:
+            json.dump(data, file, indent=4)
+        return make_response(jsonify({'status': 'success'}), 200)
+        
 @app.route('/callback', methods=['GET'])
 def callback():
     group_id = 221262044
