@@ -1,12 +1,16 @@
 setuptools
-aiogram==2.25
+aiogram
 celery
 peewee
 psycopg2-binary
 requests
 redis
-vk-captchasolver==1.0.4
+vk-captchasolver
 peewee-db-evolve
 django-celery-beat
+flask_sqlalchemy
+flask_admin
+flask_login
+flask_peewee
 
 
