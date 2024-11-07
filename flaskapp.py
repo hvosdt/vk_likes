@@ -37,10 +37,9 @@ def callback():
         print(params)
         with open('vk_code.txt', 'w') as file:
             file.write(str(params))        
-        payload = json.loads(params)
-        code = payload['code']
-        device_id = payload['device_id']
-        state = payload['state']        
+        code = params['code']
+        device_id = params['device_id']
+        state = params['state']
         client_id = config.CLIENT_ID
         
         data = {
