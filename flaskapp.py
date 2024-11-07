@@ -37,17 +37,20 @@ def callback():
         print(params)
         with open('vk_code.txt', 'w') as file:
             file.write(str(params))        
-        payload = json.loads(params['payload'])
-        silent_token = payload['token']
-        uuid = payload['uuid']
-        service_token = config.SERVICE_TOKEN
+        payload = json.loads(params)
+        code = payload['code']
+        device_id = payload['device_id']
+        state = payload['state']        
+        client_id = config.CLIENT_ID
+        
         data = {
-            'token': silent_token,
-            'access_token': service_token,
-            'uuid': uuid,
+            'code': code,
+            'device_id': device_id,
+            'state': state,
+            'grant_type': 'authorization_code',
             'v': '5.131'
         }
-        url = 'https://api.vk.com/method/auth.exchangeSilentAuthToken'
+        url = 'https://id.vk.com/oauth2/auth'
         res = requests.post(url, data=data).json()
         with open('vk_id.json', 'w') as file:
             json.dump(res, file, indent=4)
