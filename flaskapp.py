@@ -12,8 +12,12 @@ app.secret_key = 'your_secret_key'
 
 # define a route for the home page
 @app.route('/')
-def index():    
-    return render_template('index.html')
+def index():
+    response = make_response(jsonify({'status': 'success'}), 200)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = ['GET', 'POST']
+    return response 
+    
 
 @app.route('/do_auth', methods=['POST', 'GET'])
 def do_auth():
@@ -21,34 +25,17 @@ def do_auth():
         data = request.json()
         with open('vk_code.json', 'w') as file:
             json.dump(data, file, indent=4)
-        return make_response(jsonify({'status': 'success'}), 200)
+        response = make_response(jsonify({'status': 'success'}), 200)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = ['GET', 'POST']
+        return response 
         
 @app.route('/callback', methods=['GET'])
 def callback():
-    group_id = 221262044
-    if request.method == 'GET':
-        params = request.args.to_dict()
-        
-        with open('vk_code.txt', 'w') as file:
-            file.write(str(params))
-        payload = json.loads(params['payload'])
-        silent_token = payload['token']
-        uuid = payload['uuid']
-        service_token = config.SERVICE_TOKEN
-        data = {
-            'token': silent_token,
-            'access_token': service_token,
-            'uuid': uuid,
-            'v': '5.131'
-        }
-        url = 'https://api.vk.com/method/auth.exchangeSilentAuthToken'
-        res = requests.post(url, data=data).json()
-        with open('vk_id.json', 'w') as file:
-            json.dump(res, file, indent=4)
-        result = {
-            'status': 'Success'
-        }
-        return make_response(jsonify(result), 200)        
+    response = make_response(jsonify({'status': 'success'}), 200)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = ['GET', 'POST']
+    return response       
         
 @app.route('/vk_auth')
 def vk_auth():    
