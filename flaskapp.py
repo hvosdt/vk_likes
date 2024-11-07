@@ -44,6 +44,7 @@ def callback():
         
         data = {
             'code': code,
+            'client_id': client_id,
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
