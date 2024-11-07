@@ -68,11 +68,11 @@ def callback():
 @app.route('/vk_auth')
 def vk_auth():
     code_verifier = base64.urlsafe_b64encode(os.urandom(40)).decode('utf-8')
-    code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
+    #code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
     
     code_challenge = hashlib.sha256(code_verifier.encode('utf-8')).digest()
-    code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
-    code_challenge = code_challenge.replace('=', '')
+    #code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
+    #code_challenge = code_challenge.replace('=', '')
     
     state = uuid4()
     session[str(state)] = code_verifier
