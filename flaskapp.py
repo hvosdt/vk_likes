@@ -54,8 +54,7 @@ def callback():
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
-            'code_verifier': session[state],
-            'v': '5.131'
+            'code_verifier': session[state]
         }
         url = 'https://id.vk.com/oauth2/auth'
         res = requests.post(url, data=data).json()
@@ -69,11 +68,11 @@ def callback():
 @app.route('/vk_auth')
 def vk_auth():
     code_verifier = base64.urlsafe_b64encode(os.urandom(40)).decode('utf-8')
-    #code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
-    
-    code_challenge = hashlib.sha256(code_verifier.encode('utf-8'))
-    #code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
-    #code_challenge = code_challenge.replace('=', '')
+    code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
+
+    code_challenge = hashlib.sha256(code_verifier.encode('utf-8')).digest()
+    code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
+    code_challenge = code_challenge.replace('=', '')
     
     state = uuid4()
     with open('state.txt', 'w') as file:
@@ -82,4 +81,4 @@ def vk_auth():
     return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port=5000)
+    app.run(debug=True,host='0.0.0.0',port=5000)    

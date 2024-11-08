@@ -25,7 +25,8 @@
         app: "{{APP_ID}}", // Идентификатор приложения.
         redirectUrl: "{{REDIRECT_URL}}", // Адрес для перехода после авторизации.
         state: "{{STATE}}", // Произвольная строка состояния приложения.
-        code_challenge: "{{CODE_CHALLENGE}}"
+        code_challenge: "{{CODE_CHALLENGE}}",
+        code_challenge_method: "S256",
         });
         // Создание экземпляра кнопки.
         const oneTap = new VKID.OneTap();
