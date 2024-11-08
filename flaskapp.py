@@ -77,7 +77,7 @@ def vk_auth():
     
     state = uuid4()
     with open('state.txt', 'w') as file:
-        file.write(str(state))
+        file.write(str(code_verifier))
     session[str(state)] = code_verifier
     return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
 
