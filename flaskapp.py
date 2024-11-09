@@ -9,6 +9,7 @@ import base64
 import re
 import os
 import hashlib
+import pkce
 
 # initialize the Flask app
 app = Flask(__name__)
@@ -67,13 +68,7 @@ def callback():
         
 @app.route('/vk_auth')
 def vk_auth():
-    code_verifier = base64.urlsafe_b64encode(os.urandom(40)).decode('utf-8')
-    code_verifier = re.sub('[^a-zA-Z0-9]+', '', code_verifier)
-
-    code_challenge = hashlib.sha256(code_verifier.encode('utf-8')).digest()
-    code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8')
-    code_challenge = code_challenge.replace('=', '')
-    
+    code_verifier, code_challenge = pkce.generate_pkce_pair()
     state = uuid4()
     with open('state.txt', 'w') as file:
         file.write(str(code_verifier))
