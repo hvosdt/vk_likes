@@ -61,10 +61,14 @@ def callback():
         res = requests.post(url, data=data).json()
         with open('vk_id.json', 'w') as file:
             json.dump(res, file, indent=4)
+        
         result = {
             'status': 'Success'
         }
-        return make_response(jsonify(result), 200)    
+        response = make_response(jsonify(result), 200)
+        
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
         
 @app.route('/vk_auth')
 def vk_auth():
@@ -73,7 +77,8 @@ def vk_auth():
     with open('state.txt', 'w') as file:
         file.write(str(code_verifier))
     session[str(state)] = code_verifier
+    
     return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port=5000)    
+    app.run(debug=True,host='0.0.0.0',port=8000)    
