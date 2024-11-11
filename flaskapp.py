@@ -55,7 +55,7 @@ def callback():
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
-            'code_verifier': session[state]
+            'codeVerifier': session[state]
         }
         url = 'https://id.vk.com/oauth2/auth'
         res = requests.post(url, data=data).json()
