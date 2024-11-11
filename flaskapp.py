@@ -78,7 +78,7 @@ def vk_auth():
         file.write(str(code_verifier))
     session[str(state)] = code_verifier
     
-    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_CHALLENGE=code_challenge)
+    return render_template('vk_auth.html', APP_ID=config.CLIENT_ID, REDIRECT_URL=config.REDIRECT_URL, STATE=state, CODE_VERIFIER=code_verifier)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=8000)    

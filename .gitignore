@@ -7,3 +7,4 @@ vk.db
 celerybeat-schedule.db
 .env
 celerybeat-schedule
+state.txt
