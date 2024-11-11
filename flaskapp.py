@@ -55,10 +55,11 @@ def callback():
             'device_id': device_id,
             'state': state,
             'grant_type': 'authorization_code',
-            'codeVerifier': session[state]
+            'code_verifier': session[state]
         }
         url = 'https://id.vk.com/oauth2/auth'
         res = requests.post(url, data=data).json()
+        return make_response(res)
         with open('vk_id.json', 'w') as file:
             json.dump(res, file, indent=4)
         
